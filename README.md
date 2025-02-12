@@ -1,10 +1,5 @@
 # ESAME_ggplot
-
----
-title: "ESAME"
-output: html_document
-date: "2025-02-12"
----
+#2025-02-12
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
