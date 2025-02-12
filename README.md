@@ -1,9 +1,3 @@
-# ESAME_ggplot
-#2025-02-12
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 Content adapted from <https://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html>.
 
