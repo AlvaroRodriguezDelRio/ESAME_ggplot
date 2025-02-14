@@ -1,4 +1,4 @@
-[
+
 Content adapted from <https://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html>.
 
 
@@ -41,8 +41,6 @@ ggplot(babies_tbl_df)
 
 # variables to use for plotting are indicated with aes()
 ggplot(babies_tbl_df, aes(x=bwt))
-
-
 ```
 
 After aesthetics are defined, we can specify geometries (geom_X)
@@ -76,33 +74,30 @@ ggplot(babies_tbl_df %>%
   geom_violin()
 
 # and many more...
-
 ```
 
 #####
-# color control
+# color control and palletes
 #####
+
+Colors add additional layers of information to plots. 
 
 ```{r pressure, echo=FALSE}
 
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(color = 'blue', size=3)
-
-
+# discrete
 ggplot(babies_tbl_df, aes(x=bwt))+ 
   geom_histogram(aes(fill = smoke))
   
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = smoke), size=3)
 
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(aes(color = age), size=3)
-
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_boxplot(aes(fill = smoke))
+
+# continuous
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = age), size=3)
 
 # color palletes
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
@@ -115,10 +110,14 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
+You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in other libraries
+
 
 ####
 # facets 
 #### 
+
+Facets are useful for visualizing data separatelly for different categories
 
 ```{r pressure, echo=FALSE}
 
@@ -139,6 +138,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 # statistics
 ####
 
+Statistics allow to include statistical tests into our plots 
 
 ```{r pressure, echo=FALSE}
 # add regresion line
@@ -170,8 +170,6 @@ ggplot(babies_tbl_df %>%
 ggplot(babies_tbl_df, aes(x=bwt))+ 
   geom_histogram()+
   coord_polar()
-
-
 ```
 
 
@@ -179,6 +177,7 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 # themes
 #### 
 
+Themes are applied for improving the appearance and legibility of the plots
 
 ```{r pressure, echo=FALSE}
 # limit x and y axis
@@ -213,13 +212,13 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
   scale_color_continuous(type = "viridis")+
   theme(plot.background = element_rect(fill = "green"),
         axis.text.x = element_text(angle = 45, hjust = 1))
-
-
 ```
 
 ####
-# combine plots
+# combining plots
 ####
+
+For combining ggplots, the most widely used package is patchwork (https://patchwork.data-imaginist.com/)
 
 ```{r pressure, echo=FALSE}
 
@@ -241,7 +240,7 @@ p1 / p2 + plot_annotation(tag_levels = 'A')
 
 
 ###
-# save high quality images > test
+# save high quality images
 ###
 
 ```{r pressure, echo=FALSE}
@@ -256,10 +255,9 @@ ggsave(file="~/analysis/test.svg", plot = p1, width=10, height=8)
 # tables
 #####
 
+Tables can usually be adjusted easily in Word, you can format the data in any specific format, dowload the csv file, and load it to Word. 
 
 ```{r pressure, echo=FALSE}
-devtools::install_github("sfirke/packagemetrics")
-
 
 d_table = babies_tbl_df %>% 
   group_by(age) %>% 
@@ -268,23 +266,26 @@ d_table = babies_tbl_df %>%
   filter(!is.na(mean_weight))
 
 write.csv(d_table,'~/analysis/table.csv')
-
 ```
 
 ####
 # excersises
 ####
 
-Load the 
+Load the colmozzie_tbl_df dataframe from the MedDataSets library and: 
+
+1) plot the distribution of dengue cases per week
+2) Visualize how dengue cases have changed with time
+3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
+4) Combine the last two plots into a nicely formatted figure
 
 
 ```{r pressure, echo=FALSE}
 data(colmozzie_tbl_df)
-View(colmozzie_tbl_df)
-head(colmozzie_tbl_df)
+names(colmozzie_tbl_df)
 
 
-# what is the distribution of dengue cases?
+# distribution of dengue cases
 ggplot(colmozzie_tbl_df,aes(x = Cases))+
   geom_histogram()
 
@@ -302,6 +303,10 @@ ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
 
 
 # plot relation of dengue cases with mean temperature, per year
+ggplot(colmozzie_tbl_df,aes(x = V, y = Cases))+
+  geom_point()+
+  geom_smooth() 
+
 ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
   geom_point()+
   geom_smooth()+
@@ -312,8 +317,7 @@ ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
 p1 = ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
   geom_point()+
   geom_smooth(method = 'lm')+
-  theme_classic()+
-  theme()
+  theme_classic()
   
 
 p1
@@ -333,6 +337,9 @@ p2
 
 p1 + p2 + plot_annotation(tag_levels = 'A')
 
+```
+
+```{r pressure, echo=FALSE}
 # which variables are correlated with dengue cases?
 library(corrplot)
 colmozzie_tbl_df$SLP = as.numeric(colmozzie_tbl_df$SLP)
@@ -340,4 +347,3 @@ correlations = cor(colmozzie_tbl_df)
 corrplot(correlations)
 
 ```
-](https://patchwork.data-imaginist.com/)
