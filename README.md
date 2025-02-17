@@ -16,7 +16,7 @@ library(dplyr)
 # data
 ###
 
-We will use data from the MedDataSets collection (more information on the datasets included in https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf)
+We will use data from the MedDataSets collection (more information on the datasets in https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf)
 
 ```{r cars}
 # install and load library
@@ -33,8 +33,10 @@ ggplot(babies_tbl_df)
 ```
 
 ####
-# aesthetic & geometry
+# aesthetic
 ###
+
+Aesthetics indicates which variables are plotted in the x axis, in the y axis, and which are used for plotting different colors / sizes / shapes etc. Using the aes() command, we can map variables from the dataframe to each of these. 
 
 
 ```{r pressure, echo=FALSE}
@@ -43,7 +45,11 @@ ggplot(babies_tbl_df)
 ggplot(babies_tbl_df, aes(x=bwt))
 ```
 
-After aesthetics are defined, we can specify geometries (geom_X)
+#####
+# geometry
+#####
+
+After aesthetics are defined, we can specify geometries (geom_X() commands). Geometries indicate the way in which you want to represent the data indicated in the aesthetics. There are many predifined geometries in ggplot, the most common are the following.
 
 ```{r pressure, echo=FALSE}
 
@@ -59,7 +65,6 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point()
 
-
 # boxplots
 ggplot(babies_tbl_df, aes(x=smoke, y=bwt)) + 
   geom_boxplot()
@@ -72,15 +77,14 @@ ggplot(babies_tbl_df %>%
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_violin()
-
-# and many more...
 ```
 
 #####
 # color control and palletes
 #####
 
-Colors add additional layers of information to plots. 
+Colors (also shapes and sizes) add additional layers of information to plots.
+
 
 ```{r pressure, echo=FALSE}
 
@@ -91,6 +95,9 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = smoke), size=3)
 
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(shape = smoke), size=3)
+
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_boxplot(aes(fill = smoke))
@@ -98,6 +105,9 @@ ggplot(babies_tbl_df %>%
 # continuous
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = age), size=3)
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(size = age), size=3)
 
 # color palletes
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
@@ -110,14 +120,14 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
-You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in other libraries
+You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries
 
 
 ####
 # facets 
 #### 
 
-Facets are useful for visualizing data separatelly for different categories
+Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent pannel)
 
 ```{r pressure, echo=FALSE}
 
@@ -146,6 +156,15 @@ ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+
   geom_point() + 
   geom_smooth(method="lm") 
 
+correlation = cor.test(babies_tbl_df$bwt,babies_tbl_df$gestation)$estimate
+pvalue = cor.test(babies_tbl_df$bwt,babies_tbl_df$gestation)$p.value
+label = paste('R =',round(correlation,2),'\n','p-value =',round(pvalue,4))
+
+ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
+  geom_point() + 
+  geom_smooth(method="lm")+
+  geom_text(x=150, y=150, label = label)
+
 # add significance to boxplots
 library(ggpubr)
 ggplot(babies_tbl_df %>% 
@@ -159,6 +178,8 @@ ggplot(babies_tbl_df %>%
 #####
 # coordinates
 #####
+
+
 
 ```{r pressure, echo=FALSE}
 # coord flip
@@ -177,7 +198,7 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 # themes
 #### 
 
-Themes are applied for improving the appearance and legibility of the plots
+Themes are applied for boosting the appearance and legibility of the plots. 
 
 ```{r pressure, echo=FALSE}
 # limit x and y axis
@@ -222,6 +243,7 @@ For combining ggplots, the most widely used package is patchwork (https://patchw
 
 ```{r pressure, echo=FALSE}
 
+install.packages('patchwork')
 library(patchwork)
 
 p1 = ggplot(babies_tbl_df, aes(x=bwt))+ 
@@ -290,7 +312,7 @@ ggplot(colmozzie_tbl_df,aes(x = Cases))+
   geom_histogram()
 
 
-#Have dengue cases increase in time?
+#Have dengue cases increase over time?
 ggplot(colmozzie_tbl_df,aes(x = as.factor(Year), y = Cases))+
   geom_boxplot()+
     stat_compare_means(aes(group=Year),label = "p.signif", method = "wilcox.test",
