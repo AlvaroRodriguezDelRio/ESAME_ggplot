@@ -296,11 +296,12 @@ p1 / p2 + plot_annotation(tag_levels = 'A')
 
 
 ###
-# save high quality images
+# Save high quality images
 ###
 
-```{r pressure, echo=FALSE}
+You can save HQ figures figure directly from Rstudio without the need for scripting (export > save as image > select svg format). The scripting equivalent is:  
 
+```{r pressure, echo=FALSE}
 install.packages('svglite')
 library(svglite)
 ggsave(file="~/analysis/test.svg", plot = p1, width=10, height=8)
