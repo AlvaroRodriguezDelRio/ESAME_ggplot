@@ -4,8 +4,10 @@ Material for Mbioindi data visualization course.
 # Library installation and loading
 
 ```{r cars}
+# Package instalation 
 install.packages("ggplot2")
 
+# load packages
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -18,7 +20,7 @@ library(dplyr)
 We will use the `babies_tbl_df` data from the `MedDataSets` collection (more information on the datasets in `https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf`)
 
 ```{r cars}
-# install and load library
+# install and load library with datasets
 install.packages("MedDataSets") 
 library(MedDataSets)
 
