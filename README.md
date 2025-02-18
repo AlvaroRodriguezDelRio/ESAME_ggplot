@@ -1,14 +1,14 @@
 
 Material for Mbioindi data visualization seminar.  
 
-# installations
+# Library installation and loading
 
 ```{r cars}
 install.packages("ggplot2")
+
 library(ggplot2)
 library(tidyr)
 library(dplyr)
-
 ```
 
 ####
