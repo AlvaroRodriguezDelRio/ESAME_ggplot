@@ -15,7 +15,7 @@ library(dplyr)
 # Data
 ###
 
-We will use data from the MedDataSets collection (more information on the datasets in https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf)
+We will use data from the `MedDataSets` collection (more information on the datasets in `https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf`)
 
 ```{r cars}
 # install and load library
