@@ -31,6 +31,8 @@ names(babies_tbl_df)
 ggplot(babies_tbl_df)
 ```
 
+![Figure code](1.PNG)
+
 ####
 # Aesthetics
 ###
