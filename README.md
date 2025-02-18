@@ -1,6 +1,5 @@
 
-Content adapted from <https://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html>.
-
+Material for Mbioindi data visualization seminar.  
 
 # installations
 
@@ -13,7 +12,7 @@ library(dplyr)
 ```
 
 ####
-# data
+# Data
 ###
 
 We will use data from the MedDataSets collection (more information on the datasets in https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf)
@@ -33,7 +32,7 @@ ggplot(babies_tbl_df)
 ```
 
 ####
-# aesthetic
+# Aesthetics
 ###
 
 Aesthetics indicates which variables are plotted in the x axis, in the y axis, and which are used for plotting different colors / sizes / shapes etc. Using the aes() command, we can map variables from the dataframe to each of these. 
@@ -42,14 +41,15 @@ Aesthetics indicates which variables are plotted in the x axis, in the y axis, a
 ```{r pressure, echo=FALSE}
 
 # variables to use for plotting are indicated with aes()
-ggplot(babies_tbl_df, aes(x=bwt))
+names(babies_tbl_df)
+ggplot(babies_tbl_df, aes(x=bwt,y = age))
 ```
 
 #####
-# geometry
+# Geometries
 #####
 
-After aesthetics are defined, we can specify geometries (geom_X() commands). Geometries indicate the way in which you want to represent the data indicated in the aesthetics. There are many predifined geometries in ggplot, the most common are the following.
+After aesthetics are defined, we can specify geometries (geom_XXXX() commands). Geometries indicate the way in which you want to represent the data indicated in the aesthetics. There are many predifined geometries in ggplot, the most common are the following.
 
 ```{r pressure, echo=FALSE}
 
@@ -65,33 +65,46 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point()
 
+ggplot(babies_tbl_df, aes(x=smoke,y = bwt))+ 
+  geom_point()
+
 # boxplots
-ggplot(babies_tbl_df, aes(x=smoke, y=bwt)) + 
+# require discrete values (factors with different levels) in 
+# the x-axis
+ggplot(babies_tbl_df, aes(x=as.factor(smoke), y=bwt)) + 
   geom_boxplot()
 
+# boxplots 
+# NA factors can be discarded by previous manipulation of the data
 ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
+         filter(!is.na(smoke)), aes(x=as.factor(smoke), y=bwt)) + 
   geom_boxplot()
 
 # violin plots
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_violin()
+
+
 ```
 
 #####
-# color control and palletes
+# Color control and palletes
 #####
 
-Colors (also shapes and sizes) add additional layers of information to plots.
+Colors (also shapes and sizes) add additional layers of information to plots, and can help to distinguish between different groups.
 
 
 ```{r pressure, echo=FALSE}
 
-# discrete
+# discrete coloring
 ggplot(babies_tbl_df, aes(x=bwt))+ 
-  geom_histogram(aes(fill = smoke))
+  geom_histogram(aes(fill = as.factor(smoke)))
   
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt))+ 
+  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)
+
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = smoke), size=3)
 
@@ -102,17 +115,34 @@ ggplot(babies_tbl_df %>%
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_boxplot(aes(fill = smoke))
 
-# continuous
+# continuous coloring
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = age), size=3)
 
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(size = age), size=3)
 
+```
+
+Choosing the right color pallete is important for distinguishing the different groups clearly. It is also important to bear in mind vision deficiencies like color blidness for choosing color palletes. 
+
+There are many pre-built color palletes which account for this. You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries.
+
+```{r pressure, echo=FALSE}
+
 # color palletes
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt))+ 
+  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)+
+  scale_fill_brewer(palette = "Set4")
+
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = smoke), size=3)+
-  scale_color_brewer(palette = "Set1")
+  geom_point(aes(color = as.factor(smoke)), size=3)+
+  scale_color_brewer(palette = "Set2")
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = as.factor(smoke)), size=3)+
+  scale_color_brewer(palette = "PuOr")
 
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = age), size=3)+
@@ -120,14 +150,11 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
-You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries
-
-
 ####
 # facets 
 #### 
 
-Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent pannel)
+Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent panel)
 
 ```{r pressure, echo=FALSE}
 
@@ -148,14 +175,15 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 # statistics
 ####
 
-Statistics allow to include statistical tests into our plots 
+Allow to include statistical tests into our plots. 
 
 ```{r pressure, echo=FALSE}
-# add regresion line
+# add regresion line to scatter plots
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point() + 
   geom_smooth(method="lm") 
 
+# add correlation coefficients
 correlation = cor.test(babies_tbl_df$bwt,babies_tbl_df$gestation)$estimate
 pvalue = cor.test(babies_tbl_df$bwt,babies_tbl_df$gestation)$p.value
 label = paste('R =',round(correlation,2),'\n','p-value =',round(pvalue,4))
@@ -166,41 +194,29 @@ ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+
   geom_text(x=150, y=150, label = label)
 
 # add significance to boxplots
+install.packages('ggpubr')
 library(ggpubr)
 ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
+         filter(!is.na(smoke)), aes(x=as.factor(smoke), y=bwt)) + 
   geom_boxplot()+
   stat_compare_means(aes(group=smoke),label = "p.signif", method = "wilcox.test",
-                     ref.group = "0",hide.ns = TRUE, tip.length = 0,paired = F)
+                     ref.group = "0",hide.ns = TRUE)
 
 ```
 
 #####
-# coordinates
+# coordinate systems
 #####
 
 
-
 ```{r pressure, echo=FALSE}
-# coord flip
+# Flip coordinates
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_boxplot()+
   coord_flip()
 
-ggplot(babies_tbl_df, aes(x=bwt))+ 
-  geom_histogram()+
-  coord_polar()
-```
 
-
-####
-# themes
-#### 
-
-Themes are applied for boosting the appearance and legibility of the plots. 
-
-```{r pressure, echo=FALSE}
 # limit x and y axis
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point() + 
@@ -213,26 +229,44 @@ ggplot(babies_tbl_df %>%
   geom_boxplot()+
   ylim(c(0, 200))
 
+# change coordinate systems
+ggplot(babies_tbl_df, aes(x=bwt))+ 
+  geom_histogram()+
+  coord_polar()
+```
+
+
+####
+# themes
+####
+
+Themes are applied for boosting the appearance and legibility of the plots. 
+
+```{r pressure, echo=FALSE}
 
 # titles and axis labels
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_point() + 
   geom_smooth(method="lm") +
-  ggtitle("Relation between body weight and gestation time", subtitle="From babies_tbl_df dataset") + xlab("Gestation time (weeks)") + ylab("Body weight (grams)")
+  ggtitle("Relation between body weight and gestation time", subtitle="From babies_tbl_df dataset") + 
+  xlab("Gestation time (weeks)") + 
+  ylab("Body weight (grams)")
 
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(aes(color = age), size=3)+
-  scale_color_continuous(type = "viridis")+
-  theme_classic()
-
+# backround color
 ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
   geom_smooth(method="lm") +
   geom_point(aes(color = age), size=3)+
   scale_color_continuous(type = "viridis")+
   theme(plot.background = element_rect(fill = "green"),
         axis.text.x = element_text(angle = 45, hjust = 1))
+
+# predefined themes
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_smooth(method="lm") +
+  geom_point(aes(color = age), size=3)+
+  scale_color_continuous(type = "viridis")+
+  theme_classic()
+
 ```
 
 ####
