@@ -46,6 +46,7 @@ Aesthetics indicates which variables are plotted in the x axis, in the y axis, a
 names(babies_tbl_df)
 ggplot(babies_tbl_df, aes(x=bwt,y = age))
 ```
+![2](2.png)
 
 #####
 # Geometries
@@ -87,8 +88,9 @@ ggplot(babies_tbl_df %>%
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_violin()
 
-
 ```
+
+![3](3.png)
 
 #####
 # Color control and palletes
@@ -126,6 +128,8 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
+![4](4.png)
+
 Choosing the right color pallete is important for distinguishing the different groups clearly. It is also important to bear in mind vision deficiencies like color blidness for choosing color palletes. 
 
 There are many pre-built color palletes which account for this. You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries.
@@ -152,6 +156,8 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
+![5](5.png)
+
 ####
 # facets 
 #### 
@@ -172,6 +178,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
   geom_point(aes(color = age), size=3)+
   facet_grid(parity~smoke)
 ```
+![6](6.png)
 
 ####
 # statistics
@@ -206,6 +213,8 @@ ggplot(babies_tbl_df %>%
 
 ```
 
+![7](7.png)
+
 #####
 # coordinate systems
 #####
@@ -236,7 +245,7 @@ ggplot(babies_tbl_df, aes(x=bwt))+
   geom_histogram()+
   coord_polar()
 ```
-
+![8](8.png)
 
 ####
 # themes
@@ -271,6 +280,8 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 
 ```
 
+![9](9.png)
+
 ####
 # combining plots
 ####
@@ -295,6 +306,8 @@ p1 + p2
 p1 / p2 + plot_annotation(tag_levels = 'A')
 
 ```
+
+![10](10.png)
 
 
 ###
