@@ -159,7 +159,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ![5](5.png)
 
 ####
-# facets 
+# Facets 
 #### 
 
 Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent panel)
@@ -181,7 +181,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ![6](6.png)
 
 ####
-# statistics
+# Statistics
 ####
 
 Allow to include statistical tests into our plots. 
@@ -216,7 +216,7 @@ ggplot(babies_tbl_df %>%
 ![7](7.png)
 
 #####
-# coordinate systems
+# Coordinate systems
 #####
 
 
@@ -248,7 +248,7 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ![8](8.png)
 
 ####
-# themes
+# Themes
 ####
 
 Themes are applied for boosting the appearance and legibility of the plots. 
@@ -283,7 +283,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ![9](9.png)
 
 ####
-# combining plots
+# Combining plots
 ####
 
 For combining ggplots, the most widely used package is patchwork (https://patchwork.data-imaginist.com/)
@@ -324,7 +324,7 @@ ggsave(file="~/analysis/test.svg", plot = p1, width=10, height=8)
 ```
 
 #####
-# tables
+# Tables
 #####
 
 Tables can usually be adjusted easily in Word, you can format the data in any specific format, dowload the csv file, and load it to Word. 
@@ -341,7 +341,7 @@ write.csv(d_table,'~/analysis/table.csv')
 ```
 
 ####
-# excersises
+# Excersises
 ####
 
 Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
