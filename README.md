@@ -363,35 +363,31 @@ data(colmozzie_tbl_df)
 names(colmozzie_tbl_df)
 
 
-# distribution of dengue cases
+# 1) distribution of dengue cases
 ggplot(colmozzie_tbl_df,aes(x = Cases))+
   geom_histogram()
 
 
-#Have dengue cases increased over time?
+# 2) Have dengue cases increased over time?
+# could be visualized as boxplots or scatterplots
 ggplot(colmozzie_tbl_df,aes(x = as.factor(Year), y = Cases))+
   geom_boxplot()+
     stat_compare_means(aes(group=Year),label = "p.signif", method = "wilcox.test",
                      ref.group = "2009",hide.ns = TRUE, tip.length = 0,paired = F)
-
 
 ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
   geom_point()+
   geom_smooth(method = 'lm')
 
 
-# plot relation of dengue cases with mean temperature, visualize for evrey year
-ggplot(colmozzie_tbl_df,aes(x = V, y = Cases))+
-  geom_point()+
-  geom_smooth() 
-
+# 3) plot relation of dengue cases with mean temperature, visualize for every year
 ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
   geom_point()+
   geom_smooth(method = 'lm')+
   facet_grid(~Year,scales = 'free')
 
 
-# combine the two previous plots into a nicely formatted plot 
+# 4) combine the two previous plots into a nicely formatted plot 
 p1 = ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
   geom_point()+
   geom_smooth(method = 'lm')+
