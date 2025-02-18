@@ -344,9 +344,9 @@ write.csv(d_table,'~/analysis/table.csv')
 # excersises
 ####
 
-Load the colmozzie_tbl_df dataframe from the MedDataSets library and: 
+Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
 
 1) plot the distribution of dengue cases per week
-2) Visualize how dengue cases have changed with time
+2) Visualize how dengue cases have changed over time
 3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
 4) Combine the last two plots into a nicely formatted figure
