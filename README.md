@@ -1,5 +1,5 @@
 
-Material for Mbioindi data visualization seminar.  
+Material for Mbioindi data visualization course.  
 
 # Library installation and loading
 
