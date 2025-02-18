@@ -341,7 +341,7 @@ write.csv(d_table,'~/analysis/table.csv')
 ```
 
 ####
-# Excersises
+# Excercises
 ####
 
 Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
