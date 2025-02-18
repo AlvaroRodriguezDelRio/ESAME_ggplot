@@ -352,3 +352,67 @@ Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and:
 2) Visualize how dengue cases have changed over time
 3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
 4) Combine the last two plots into a nicely formatted figure
+
+###
+# Solutions
+###
+
+```{r pressure, echo=FALSE}
+
+data(colmozzie_tbl_df)
+names(colmozzie_tbl_df)
+
+
+# distribution of dengue cases
+ggplot(colmozzie_tbl_df,aes(x = Cases))+
+  geom_histogram()
+
+
+#Have dengue cases increased over time?
+ggplot(colmozzie_tbl_df,aes(x = as.factor(Year), y = Cases))+
+  geom_boxplot()+
+    stat_compare_means(aes(group=Year),label = "p.signif", method = "wilcox.test",
+                     ref.group = "2009",hide.ns = TRUE, tip.length = 0,paired = F)
+
+
+ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
+  geom_point()+
+  geom_smooth(method = 'lm')
+
+
+# plot relation of dengue cases with mean temperature, visualize for evrey year
+ggplot(colmozzie_tbl_df,aes(x = V, y = Cases))+
+  geom_point()+
+  geom_smooth() 
+
+ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  facet_grid(~Year,scales = 'free')
+
+
+# combine the two previous plots into a nicely formatted plot 
+p1 = ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  theme_classic()
+  
+
+p1
+
+p2 = ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
+  geom_point()+
+  geom_smooth()+
+  facet_wrap(~Year)+
+  theme_classic()+
+  scale_color_brewer(palette = "Set1")+
+  xlab('Maximum temperature')+
+  scale_x_continuous(breaks=seq(28, 32, 2))+
+  labs(color = "Year")
+  
+
+p2
+
+p1 + p2 + plot_annotation(tag_levels = 'A')
+```
+
