@@ -329,7 +329,7 @@ ggsave(file="~/analysis/test.svg", plot = p1, width=10, height=8)
 # Tables
 #####
 
-Tables can usually be adjusted easily in Word, you can format the data in any specific format, dowload the csv file, and load it to Word. 
+R / ggplot2 are not optimized for table presentation. Tables can usually be adjusted easily in other software. You may format the data in any specific way you want to present it, dowload the csv file, and load it to Latex or Word, for instance. 
 
 ```{r pressure, echo=FALSE}
 
@@ -352,63 +352,3 @@ Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and:
 2) Visualize how dengue cases have changed over time
 3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
 4) Combine the last two plots into a nicely formatted figure
-
-###
-# Solutions
-###
-
-```{r pressure, echo=FALSE}
-
-data(colmozzie_tbl_df)
-names(colmozzie_tbl_df)
-
-
-# 1) distribution of dengue cases
-ggplot(colmozzie_tbl_df,aes(x = Cases))+
-  geom_histogram()
-
-
-# 2) Have dengue cases increased over time?
-# could be visualized as boxplots or scatterplots
-ggplot(colmozzie_tbl_df,aes(x = as.factor(Year), y = Cases))+
-  geom_boxplot()+
-    stat_compare_means(aes(group=Year),label = "p.signif", method = "wilcox.test",
-                     ref.group = "2009",hide.ns = TRUE, tip.length = 0,paired = F)
-
-ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
-  geom_point()+
-  geom_smooth(method = 'lm')
-
-
-# 3) plot relation of dengue cases with mean temperature, visualize for every year
-ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
-  geom_point()+
-  geom_smooth(method = 'lm')+
-  facet_grid(~Year,scales = 'free')
-
-
-# 4) combine the two previous plots into a nicely formatted plot 
-p1 = ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
-  geom_point()+
-  geom_smooth(method = 'lm')+
-  theme_classic()
-  
-
-p1
-
-p2 = ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases, color = as.factor(Year)))+
-  geom_point()+
-  geom_smooth()+
-  facet_wrap(~Year)+
-  theme_classic()+
-  scale_color_brewer(palette = "Set1")+
-  xlab('Maximum temperature')+
-  scale_x_continuous(breaks=seq(28, 32, 2))+
-  labs(color = "Year")
-  
-
-p2
-
-p1 + p2 + plot_annotation(tag_levels = 'A')
-```
-
