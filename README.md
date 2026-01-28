@@ -97,7 +97,7 @@ ggplot(babies_tbl_df %>%
 ![3](3.png)
 
 ####
-# Facets 
+## Facets 
 #### 
 
 Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent panel)
@@ -119,7 +119,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ![6](6.png)
 
 ####
-# Statistics
+## Statistics
 ####
 
 Allow to include statistical tests into our plots. 
@@ -154,7 +154,7 @@ ggplot(babies_tbl_df %>%
 ![7](7.png)
 
 #####
-# Coordinate systems
+## Coordinate systems
 #####
 
 
@@ -186,7 +186,21 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ![8](8.png)
 
 ####
-# Themes
+## Excercises
+####
+
+Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
+
+1) plot the distribution of dengue cases per week
+2) Visualize how dengue cases have changed over time
+3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
+
+
+
+# Day 2
+
+####
+## Themes
 ####
 
 Themes are applied for boosting the appearance and legibility of the plots. 
@@ -219,33 +233,6 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ```
 
 ![9](9.png)
-
-####
-# Combining plots
-####
-
-For combining ggplots, the most widely used package is patchwork (https://patchwork.data-imaginist.com/)
-
-```{r pressure, echo=FALSE}
-
-install.packages('patchwork')
-library(patchwork)
-
-p1 = ggplot(babies_tbl_df, aes(x=bwt))+ 
-  geom_histogram(aes(fill = smoke))+
-  facet_grid(~smoke)
-
-p2 = ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(aes(color = age), size=3)+
-  facet_grid(~smoke)
-
-p1 + p2
-p1 / p2 + plot_annotation(tag_levels = 'A')
-
-```
-
-![10](10.png)
 
 #####
 ## Color control and palletes
@@ -314,9 +301,37 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ![5](5.png)
 
 
+####
+## Combining plots
+####
+
+For combining ggplots, the most widely used package is patchwork (https://patchwork.data-imaginist.com/)
+
+```{r pressure, echo=FALSE}
+
+install.packages('patchwork')
+library(patchwork)
+
+p1 = ggplot(babies_tbl_df, aes(x=bwt))+ 
+  geom_histogram(aes(fill = smoke))+
+  facet_grid(~smoke)
+
+p2 = ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_smooth(method="lm") +
+  geom_point(aes(color = age), size=3)+
+  facet_grid(~smoke)
+
+p1 + p2
+p1 / p2 + plot_annotation(tag_levels = 'A')
+
+```
+
+![10](10.png)
+
+
 
 ###
-# Save high quality images
+## Save high quality images
 ###
 
 You can save HQ figures figure directly from Rstudio without the need for scripting (export > save as image > select svg format). The scripting equivalent is:  
@@ -329,7 +344,7 @@ ggsave(file="~/analysis/test.svg", plot = p1, width=10, height=8)
 ```
 
 #####
-# Tables
+## Tables
 #####
 
 R / ggplot2 are not optimized for table presentation. Tables can usually be adjusted easily in other software. You may format the data in any specific way you want to present it, dowload the csv file, and load it to Latex or Word, for instance. 
@@ -346,12 +361,9 @@ write.csv(d_table,'~/analysis/table.csv')
 ```
 
 ####
-# Excercises
+## Excercises
 ####
 
 Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
 
-1) plot the distribution of dengue cases per week
-2) Visualize how dengue cases have changed over time
-3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
-4) Combine the last two plots into a nicely formatted figure
+1) Combine the last two plots from yesterday into a nicely formatted figure
