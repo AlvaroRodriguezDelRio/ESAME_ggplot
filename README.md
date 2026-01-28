@@ -199,41 +199,6 @@ Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and:
 
 # Day 2
 
-####
-## Themes
-####
-
-Themes are applied for boosting the appearance and legibility of the plots. 
-
-```{r pressure, echo=FALSE}
-
-# titles and axis labels
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point() + 
-  geom_smooth(method="lm") +
-  ggtitle("Relation between body weight and gestation time", subtitle="From babies_tbl_df dataset") + 
-  xlab("Gestation time (weeks)") + 
-  ylab("Body weight (grams)")
-
-# backround color
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(aes(color = age), size=3)+
-  scale_color_continuous(type = "viridis")+
-  theme(plot.background = element_rect(fill = "green"),
-        axis.text.x = element_text(angle = 45, hjust = 1))
-
-# predefined themes
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_smooth(method="lm") +
-  geom_point(aes(color = age), size=3)+
-  scale_color_continuous(type = "viridis")+
-  theme_classic()
-
-```
-
-![9](9.png)
-
 #####
 ## Color control and palletes
 #####
@@ -299,6 +264,43 @@ ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+
 ```
 
 ![5](5.png)
+
+
+
+####
+## Themes
+####
+
+Themes are applied for boosting the appearance and legibility of the plots. 
+
+```{r pressure, echo=FALSE}
+
+# titles and axis labels
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point() + 
+  geom_smooth(method="lm") +
+  ggtitle("Relation between body weight and gestation time", subtitle="From babies_tbl_df dataset") + 
+  xlab("Gestation time (weeks)") + 
+  ylab("Body weight (grams)")
+
+# backround color
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_smooth(method="lm") +
+  geom_point(aes(color = age), size=3)+
+  scale_color_continuous(type = "viridis")+
+  theme(plot.background = element_rect(fill = "green"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+# predefined themes
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_smooth(method="lm") +
+  geom_point(aes(color = age), size=3)+
+  scale_color_continuous(type = "viridis")+
+  theme_classic()
+
+```
+
+![9](9.png)
 
 
 ####
