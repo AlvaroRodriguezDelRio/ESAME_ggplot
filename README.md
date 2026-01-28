@@ -1,9 +1,9 @@
 
 Material for Mbioindi data visualization course.  
 
-## Day 1
+# Day 1
 
-# Library installation and loading
+## Library installation and loading
 
 ```{r cars}
 # Package instalation 
@@ -16,7 +16,7 @@ library(dplyr)
 ```
 
 ####
-# Data
+## Data
 ###
 
 We will use the `babies_tbl_df` data from the `MedDataSets` collection (more information on the datasets in `https://cran.r-project.org/web/packages/MedDataSets/MedDataSets.pdf`)
@@ -38,7 +38,7 @@ ggplot(babies_tbl_df)
 ![1](1.png)
 
 ####
-# Aesthetics
+## Aesthetics
 ###
 
 Aesthetics indicates which variables are plotted in the x axis, in the y axis, and which are used for plotting different colors / sizes / shapes etc. Using the aes() command, we can map variables from the dataframe to each of these. 
@@ -53,7 +53,7 @@ ggplot(babies_tbl_df, aes(x=bwt,y = age))
 ![2](2.png)
 
 #####
-# Geometries
+## Geometries
 #####
 
 After aesthetics are defined, we can specify geometries (geom_XXXX() commands). Geometries indicate the way in which you want to represent the data indicated in the aesthetics. There are many predifined geometries in ggplot, the most common are the following.
@@ -95,72 +95,6 @@ ggplot(babies_tbl_df %>%
 ```
 
 ![3](3.png)
-
-#####
-# Color control and palletes
-#####
-
-Colors (also shapes and sizes) add additional layers of information to plots, and can help to distinguish between different groups.
-
-
-```{r pressure, echo=FALSE}
-
-# discrete coloring
-ggplot(babies_tbl_df, aes(x=bwt))+ 
-  geom_histogram(aes(fill = as.factor(smoke)))
-  
-ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=bwt))+ 
-  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = smoke), size=3)
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(shape = smoke), size=3)
-
-ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
-  geom_boxplot(aes(fill = smoke))
-
-# continuous coloring
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = age), size=3)
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(size = age), size=3)
-
-```
-
-![4](4.png)
-
-Choosing the right color pallete is important for distinguishing the different groups clearly. It is also important to bear in mind vision deficiencies like color blidness for choosing color palletes. 
-
-There are many pre-built color palletes which account for this. You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries.
-
-```{r pressure, echo=FALSE}
-
-# color palletes
-ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=bwt))+ 
-  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)+
-  scale_fill_brewer(palette = "Set4")
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = as.factor(smoke)), size=3)+
-  scale_color_brewer(palette = "Set2")
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = as.factor(smoke)), size=3)+
-  scale_color_brewer(palette = "PuOr")
-
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
-  geom_point(aes(color = age), size=3)+
-  scale_color_continuous(type = "viridis")
-
-```
-
-![5](5.png)
 
 ####
 # Facets 
@@ -312,6 +246,73 @@ p1 / p2 + plot_annotation(tag_levels = 'A')
 ```
 
 ![10](10.png)
+
+#####
+## Color control and palletes
+#####
+
+Colors (also shapes and sizes) add additional layers of information to plots, and can help to distinguish between different groups.
+
+
+```{r pressure, echo=FALSE}
+
+# discrete coloring
+ggplot(babies_tbl_df, aes(x=bwt))+ 
+  geom_histogram(aes(fill = as.factor(smoke)))
+  
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt))+ 
+  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = smoke), size=3)
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(shape = smoke), size=3)
+
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
+  geom_boxplot(aes(fill = smoke))
+
+# continuous coloring
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = age), size=3)
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(size = age), size=3)
+
+```
+
+![4](4.png)
+
+Choosing the right color pallete is important for distinguishing the different groups clearly. It is also important to bear in mind vision deficiencies like color blidness for choosing color palletes. 
+
+There are many pre-built color palletes which account for this. You can find a list of colour palletes included in ggplot in https://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually, but many other exist in external libraries.
+
+```{r pressure, echo=FALSE}
+
+# color palletes
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt))+ 
+  geom_density(aes(fill = as.factor(smoke)),alpha = 0.5)+
+  scale_fill_brewer(palette = "Set4")
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = as.factor(smoke)), size=3)+
+  scale_color_brewer(palette = "Set2")
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = as.factor(smoke)), size=3)+
+  scale_color_brewer(palette = "PuOr")
+
+ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+  geom_point(aes(color = age), size=3)+
+  scale_color_continuous(type = "viridis")
+
+```
+
+![5](5.png)
+
 
 
 ###
