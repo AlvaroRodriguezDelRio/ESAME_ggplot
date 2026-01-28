@@ -1,6 +1,8 @@
 
 Material for Mbioindi data visualization course.  
 
+## Day 1
+
 # Library installation and loading
 
 ```{r cars}
