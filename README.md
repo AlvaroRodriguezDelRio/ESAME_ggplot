@@ -72,8 +72,10 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point()
 
+
 ggplot(babies_tbl_df, aes(x=smoke,y = bwt))+ 
   geom_point()
+
 
 # boxplots
 # require discrete values (factors with different levels) in 
@@ -81,7 +83,6 @@ ggplot(babies_tbl_df, aes(x=smoke,y = bwt))+
 ggplot(babies_tbl_df, aes(x=as.factor(smoke), y=bwt)) + 
   geom_boxplot()
 
-# boxplots 
 # NA factors can be discarded by previous manipulation of the data
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=as.factor(smoke), y=bwt)) + 
@@ -91,6 +92,12 @@ ggplot(babies_tbl_df %>%
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_violin()
+
+# density plots 
+ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
+  geom_hex()
+
+...
 
 ```
 
