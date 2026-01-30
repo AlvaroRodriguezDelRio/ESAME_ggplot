@@ -125,7 +125,7 @@ ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+
 ## Facets 
 #### 
 
-Facets are useful for visualizing data separately for different categories (similarly as colors, but having each categorical variable in an independent panel)
+Facets are useful for visualizing data separately for different categories, having each categorical variable in an independent panel.
 
 ```{r pressure, echo=FALSE}
 
@@ -133,13 +133,16 @@ ggplot(babies_tbl_df, aes(x=bwt))+
   geom_histogram(aes(fill = parity))+
   facet_grid(~smoke)
 
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = age), size=3)+
   facet_grid(~smoke)
 
-ggplot(babies_tbl_df, aes(x=bwt,y = gestation))+ 
+ggplot(babies_tbl_df %>% 
+         filter(!is.na(smoke)), aes(x=bwt,y = gestation))+ 
   geom_point(aes(color = age), size=3)+
   facet_grid(parity~smoke)
+
 ```
 ![6](6.png)
 
