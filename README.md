@@ -104,7 +104,7 @@ ggplot(babies_tbl_df %>%
 ####
 
 ggplot(babies_tbl_df %>% 
-         filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
+         filter(!is.na(smoke)), aes(x=as.factor(smoke), y=bwt)) + 
   geom_violin()
 
 
