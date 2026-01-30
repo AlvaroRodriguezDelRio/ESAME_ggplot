@@ -60,15 +60,24 @@ After aesthetics are defined, we can specify geometries (geom_XXXX() commands). 
 
 ```{r pressure, echo=FALSE}
 
+####
 # histograms
+####
+
 ggplot(babies_tbl_df, aes(x=bwt))+ 
   geom_histogram()
 
+####
 # density plots
+####
+
 ggplot(babies_tbl_df, aes(x=bwt))+ 
   geom_density()
 
+###
 # scatter plots
+####
+
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_point()
 
@@ -76,8 +85,10 @@ ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+
 ggplot(babies_tbl_df, aes(x=smoke,y = bwt))+ 
   geom_point()
 
-
+####
 # boxplots
+####
+
 # require discrete values (factors with different levels) in 
 # the x-axis
 ggplot(babies_tbl_df, aes(x=as.factor(smoke), y=bwt)) + 
@@ -88,12 +99,19 @@ ggplot(babies_tbl_df %>%
          filter(!is.na(smoke)), aes(x=as.factor(smoke), y=bwt)) + 
   geom_boxplot()
 
+####
 # violin plots
+####
+
 ggplot(babies_tbl_df %>% 
          filter(!is.na(smoke)), aes(x=smoke, y=bwt)) + 
   geom_violin()
 
+
+####
 # density plots 
+####
+
 ggplot(babies_tbl_df, aes(y=bwt,x = gestation))+ 
   geom_hex()
 
