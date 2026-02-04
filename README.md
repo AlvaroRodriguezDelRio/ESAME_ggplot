@@ -181,6 +181,20 @@ ggplot(babies_tbl_df %>%
 
 ![7](7.png)
 
+
+####
+## Excercises
+####
+
+Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
+
+1) Plot the distribution of dengue cases per week
+2) Visualize how dengue cases have changed over time
+3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
+
+
+# Day 2
+
 #####
 ## Coordinate systems
 #####
@@ -213,19 +227,6 @@ ggplot(babies_tbl_df, aes(x=bwt))+
 ```
 ![8](8.png)
 
-####
-## Excercises
-####
-
-Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
-
-1) plot the distribution of dengue cases per week
-2) Visualize how dengue cases have changed over time
-3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
-
-
-
-# Day 2
 
 #####
 ## Color control and palletes
@@ -396,4 +397,4 @@ write.csv(d_table,'~/analysis/table.csv')
 
 Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
 
-1) Combine the last two plots from yesterday into a nicely formatted figure
+1) Combine the last two plots from yesterday into a nicely formatted figure. 
