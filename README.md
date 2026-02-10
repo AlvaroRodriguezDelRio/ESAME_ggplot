@@ -192,6 +192,46 @@ Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and:
 2) Visualize how dengue cases have changed over time
 3) Plot the relation of Dengue cases and maximum temperature every year for which data was gathered
 
+```{r pressure, echo=FALSE}
+
+data(colmozzie_tbl_df)
+names(colmozzie_tbl_df)
+
+
+# 1) distribution of dengue cases
+ggplot(data = colmozzie_tbl_df,aes(x = Cases))+
+  geom_histogram(bins = 100)
+
+# 2) Have dengue cases increased over time?
+# could be visualized as boxplots or scatterplots
+head(colmozzie_tbl_df)
+colmozzie_tbl_df %>% 
+  filter(Week == 1)
+
+ggplot(colmozzie_tbl_df,aes(x = as.factor(Year), y = Cases))+
+  geom_boxplot()+
+    stat_compare_means(aes(group=Year),label = "p.signif",
+                       method = "wilcox.test",
+                     ref.group = "2009",
+                     hide.ns = TRUE, 
+                     tip.length = 0,
+                     paired = F)
+
+ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
+  geom_point()+
+  geom_smooth(method = 'lm')
+
+cor.test(colmozzie_tbl_df$Cases,colmozzie_tbl_df$Year)
+
+
+# 3) plot relation of dengue cases with mean temperature, visualize for every year
+ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  facet_grid(~Year, scales = 'free')
+
+```
+
 
 # Day 2
 
@@ -397,4 +437,29 @@ write.csv(d_table,'~/analysis/table.csv')
 
 Load the colmozzie_tbl_df dataframe from the `MedDataSets` library and: 
 
-1) Combine the last two plots from yesterday into a nicely formatted figure. 
+1) Combine the last two plots from yesterday into a nicely formatted figure.
+
+```{r pressure, echo=FALSE}
+
+p1 = ggplot(colmozzie_tbl_df,aes(x = Year, y = Cases))+
+  geom_point()+
+  geom_smooth(method = 'lm')+
+  theme_classic()
+
+p1
+
+p2 = ggplot(colmozzie_tbl_df,aes(x = TMAX, y = Cases))+
+  geom_point(aes(color = as.factor(Year)))+
+  geom_smooth(aes(color = as.factor(Year)),method = 'lm')+
+  facet_wrap(~Year)+
+  theme_classic()+
+  scale_color_brewer(palette = "Set1")+
+  xlab('Maximum temperature')+
+  scale_x_continuous(breaks=seq(28, 32, 2))+
+  labs(color = "XXXX")
+ 
+
+p2
+
+p1 + p2 + plot_annotation(tag_levels = 'A')
+```
